@@ -1,4 +1,5 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { ITask } from "../../types";
 import Button from "../Button";
 import style from "./Form.module.scss";
@@ -51,7 +52,16 @@ class Form extends React.Component<{
 
   addTask(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    this.props.setTasks((oldTasks) => [...oldTasks, { ...this.state }]);
+    this.props.setTasks((oldTasks) => [
+      ...oldTasks,
+      {
+        ...this.state,
+        completed: false,
+        selected: false,
+        id: uuidv4(),
+      },
+    ]);
+    this.setState({ name: "", time: "00:00" });
   }
 }
 
